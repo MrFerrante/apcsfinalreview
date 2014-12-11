@@ -12,15 +12,15 @@
 
 	<!-- Dropdown Structure -->
 	<ul id='lessonDropdown' class='dropdown-content' id="dropdown-content">
-		<li><a href="#!">One</a></li>
-		<li><a href="#!">Two</a></li>
-		<li><a href="#!">Three</a></li>
-		<li><a href="#!">Four</a></li>
-		<li><a href="#!">Five</a></li>
-		<li><a href="#!">Six</a></li>
-		<li><a href="#!">Seven</a></li>
-		<li><a href="#!">Eight</a></li>
-		<li><a href="#!">Nine</a></li>
+		<li class="link-lesson" id="link-lesson-1"><a href="#!">One</a></li>
+		<li class="link-lesson" id="link-lesson-2"><a href="#!">Two</a></li>
+		<li class="link-lesson" id="link-lesson-3"><a href="#!">Three</a></li>
+		<li class="link-lesson" id="link-lesson-4"><a href="#!">Four</a></li>
+		<li class="link-lesson" id="link-lesson-5"><a href="#!">Five</a></li>
+		<li class="link-lesson" id="link-lesson-6"><a href="#!">Six</a></li>
+		<li class="link-lesson" id="link-lesson-7"><a href="#!">Seven</a></li>
+		<li class="link-lesson" id="link-lesson-8"><a href="#!">Eight</a></li>
+		<li class="link-lesson" id="link-lesson-9"><a href="#!">Nine</a></li>
 	</ul>
 	<nav class="blue darken-2">
 		<div class="nav-wrapper">
@@ -60,39 +60,7 @@
 
 		<div class="col s9 content">
 			<div class="container content-container">
-				<h2 class="header-text" style="padding-bottom:30px">Set 1</h2>
-				<div class="problem">
-					<div class="title">
-						<h5 class="header-text subheader">Problem 1</h5>
-					</div>
 
-					<br><br><br>
-
-					<p class="problem-text">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.</p>
-
-					<br><br>
-
-					 <a class="waves-effect waves-light btn answer-show" style="text-decoration:none">Show Answer</a>
-					 <br>
-					<pre style="display:none;">System.out.println("hello world")&#x0A;&#9;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello</pre>
-				</div>
-
-				<div class="problem">
-					<div class="title">
-						<h5 class="header-text subheader" >Problem 1</h5>
-					</div>
-
-					<br><br><br>
-
-					<p class="problem-text">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.</p>
-
-					<br><br>
-
-					 <a class="waves-effect waves-light btn answer-show" style="text-decoration:none">Show Answer</a>
-					 <br>
-					<pre style="display:none;">System.out.println("hello world") hello
-	System.out.println("hello world") hello</pre>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -102,22 +70,73 @@
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="javascripts/jquery.nicescroll.min.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.0.6/firebase.js"></script>
-	
+
 	<script type="text/javascript">
+	var newContent;
 		$(document).ready(function(){
 
 			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
+			//var newContent;
+			//set defaults
+			var lesson = 1;
+			var set = 1;
+			$(".link-lesson").click(function(){
+				var num = $(this).attr('id').replace(/link-lesson-/,"");
+				//console.log(parseInt(num));
+
+
+				newContent = '<h2 class="header-text" style="padding-bottom:30px">Lesson ' + num+ '</h2>';
+
+				var newRef = new Firebase("https://apcsfinalreview.firebaseio.com/2/1/problems");
+
+				newRef.on("value", function(snapshot) {
+				  var counter = 1;
+				  var loopCount = 1;
+				  //console.log(snapshot);
+				  //console.log("ta");
+				  
+				  snapshot.forEach(function(childSnapshot){
+				  	console.log(snapshot.numChildren());
+				  	//console.log(childSnapshot.child(0).val());
+				  	var build = '<div class=problem><div class=title><h5 class="header-text subheader">Problem ' + counter + '</h5></div><br><br><br><p class=problem-text>'+childSnapshot.child(0).val()+'</p><br><br><a class="waves-effect waves-light btn answer-show" style=text-decoration:none>Show Answer</a><br><pre style=display:none>'+childSnapshot.child(1).val()+'</pre></div>';
+
+				  	//var build = "yd";
+				  	newContent = newContent + build;
+					counter++;
+					if(loopCount >= snapshot.numChildren()){
+						$(".content-container").html(newContent);
+						$(".sidebar,.content").niceScroll({cursorcolor:"#757575"});
+						return true;
+					}
+
+					loopCount++;
+				  })
+				}, function (errorObject) {
+				  console.log("The read failed: " + errorObject.code);
+				});
+				
+				
+
+				//$(this).click();
+			});
+
+
+			// ref.on("value", function(snapshot) {
+			//   console.log(snapshot.child('2-4').child('name').val());
+			// }, function (errorObject) {
+			//   console.log("The read failed: " + errorObject.code);
+			// });
+
+
+
 
 
 			$('.dropdown-button').dropdown();
 			$('.btn').click(function(){
 				$(".sidebar,.content").niceScroll({cursorcolor:"#757575"});
-			})
-			$(".sidebar,.content").niceScroll({cursorcolor:"#757575"});
-			$(".card-panel").click(function(){
-
-				//$(this).toggleClass("z-depth-2",1000);
 			});
+
+			$(".sidebar,.content").niceScroll({cursorcolor:"#757575"});
 
 			$('.answer-show').click(function() {
 		        $('pre').slideToggle("fast");
