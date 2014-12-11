@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>APCS Final Review</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen"/>
+	<link rel="stylesheet" href="stylesheets/styles.css">
+</head>
+<body>
+
+	<!-- Dropdown Structure -->
+	<ul id='lessonDropdown' class='dropdown-content' id="dropdown-content">
+		<li><a href="#!">One</a></li>
+		<li><a href="#!">Two</a></li>
+		<li><a href="#!">Three</a></li>
+		<li><a href="#!">Four</a></li>
+		<li><a href="#!">Five</a></li>
+		<li><a href="#!">Six</a></li>
+		<li><a href="#!">Seven</a></li>
+		<li><a href="#!">Eight</a></li>
+		<li><a href="#!">Nine</a></li>
+	</ul>
+	<nav class="blue darken-2">
+		<div class="nav-wrapper">
+			<div class="col s12">
+				<a href="#!" class="brand-logo" style="margin-left:30px;text-decoration:none">APCS Final Review</a>
+				<ul class="right side-nav" style="margin-left:30px">
+					<li style="margin-right:40px"><a class="dropdown-button" href="#" data-activates='lessonDropdown'><span style="position:relative; top:-8px;left:-3px">Lesson</span><i class="mdi-navigation-arrow-drop-down right"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="row">
+		<div class="col l2 sidebar">
+			<h3 style="margin-top:100px">Problems</h3>
+			<div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 1</span>
+		    </div>
+		    <div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 2</span>
+		    </div>
+		    <div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 3</span>
+		    </div>
+		    <div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 4</span>
+		    </div>
+		    <div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 5</span>
+		    </div>
+		    <div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 6</span>
+		    </div>
+		    <div class="card-panel grey waves-effect waves-light text-center darken-3">
+		        <span class="white-text" style="font-size:24px;" id="set-title">Set 7</span>
+		    </div>
+		</div>
+
+		<div class="col s9 content">
+			<div class="container content-container">
+				<h2 class="header-text" style="padding-bottom:30px">Set 1</h2>
+				<div class="problem">
+					<div class="title">
+						<h5 class="header-text subheader">Problem 1</h5>
+					</div>
+
+					<br><br><br>
+
+					<p class="problem-text">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.</p>
+
+					<br><br>
+
+					 <a class="waves-effect waves-light btn answer-show" style="text-decoration:none">Show Answer</a>
+					 <br>
+					<pre style="display:none;">System.out.println("hello world")&#x0A;&#9;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello&#x0A;System.out.println("hello world") hello</pre>
+				</div>
+
+				<div class="problem">
+					<div class="title">
+						<h5 class="header-text subheader" >Problem 1</h5>
+					</div>
+
+					<br><br><br>
+
+					<p class="problem-text">I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively. I am similar to what is called a panel in other frameworks.</p>
+
+					<br><br>
+
+					 <a class="waves-effect waves-light btn answer-show" style="text-decoration:none">Show Answer</a>
+					 <br>
+					<pre style="display:none;">System.out.println("hello world") hello
+	System.out.println("hello world") hello</pre>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="javascripts/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.dropdown-button').dropdown();
+			$('.btn').click(function(){
+				$(".sidebar,.content").niceScroll({cursorcolor:"#757575"});
+			})
+			$(".sidebar,.content").niceScroll({cursorcolor:"#757575"});
+			$(".card-panel").click(function(){
+
+				//$(this).toggleClass("z-depth-2",1000);
+			});
+
+			$('.answer-show').click(function() {
+		        $('pre').slideToggle("fast");
+		    });
+		});
+	</script> 
+</body>
+</html>
