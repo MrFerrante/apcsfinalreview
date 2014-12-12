@@ -87,3 +87,27 @@ li{
 {
 	background-color: #000000;
 }
+
+nav{
+	background-color: #1976d2;
+}
+
+.side-nav li a:hover{
+	text-decoration: none;
+	background-color: #82b1ff;
+	color: white;
+
+	-webkit-animation: myfirst .2s; /* Chrome, Safari, Opera */
+    animation: myfirst .2s;
+}
+
+@-webkit-keyframes myfirst {
+    from {background: #1976d2;}
+    to {background: #82b1ff;}
+}
+
+/* Standard syntax */
+@keyframes myfirst {
+    from {background: #1976d2;}
+    to {background: #82b1ff;}
+}
