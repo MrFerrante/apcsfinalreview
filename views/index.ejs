@@ -11,15 +11,23 @@
 <body>
 
 	<ul id='lessonDropdown' class='dropdown-content' id="dropdown-content">
-		<li class="link-lesson" id="link-lesson-1"><a href="#!">One</a></li>
-		<li class="link-lesson" id="link-lesson-2"><a href="#!">Two</a></li>
-		<li class="link-lesson" id="link-lesson-3"><a href="#!">Three</a></li>
-		<li class="link-lesson" id="link-lesson-4"><a href="#!">Four</a></li>
-		<li class="link-lesson" id="link-lesson-5"><a href="#!">Five</a></li>
-		<li class="link-lesson" id="link-lesson-6"><a href="#!">Six</a></li>
-		<li class="link-lesson" id="link-lesson-7"><a href="#!">Seven</a></li>
-		<li class="link-lesson" id="link-lesson-8"><a href="#!">Eight</a></li>
-		<li class="link-lesson" id="link-lesson-9"><a href="#!">Nine</a></li>
+
+		<li class="link-lesson" id="link-lesson-1"><a href="#">1 to 2</a></li>
+		<li class="link-lesson" id="link-lesson-2"><a href="#">3</a></li>
+		<li class="link-lesson" id="link-lesson-3"><a href="#">4 to 5</a></li>
+		<li class="link-lesson" id="link-lesson-4"><a href="#">6</a></li>
+		<li class="link-lesson" id="link-lesson-5"><a href="#">Binary</a></li>
+		<li class="link-lesson" id="link-lesson-6"><a href="#">7</a></li>
+		<li class="link-lesson" id="link-lesson-7"><a href="#">8</a></li>
+		<li class="link-lesson" id="link-lesson-8"><a href="#">9</a></li>
+		<li class="link-lesson" id="link-lesson-9"><a href="#">10</a></li>
+		<li class="link-lesson" id="link-lesson-10"><a href="#">11</a></li>
+		<li class="link-lesson" id="link-lesson-11"><a href="#">12</a></li>
+		<li class="link-lesson" id="link-lesson-12"><a href="#">13 to 14</a></li>
+		<li class="link-lesson" id="link-lesson-13"><a href="#">15</a></li>
+		<li class="link-lesson" id="link-lesson-14"><a href="#">16</a></li>
+
+
 	</ul>
 	<nav class="blue darken-2" style="position:fixed">
 		<div class="nav-wrapper">
@@ -61,8 +69,8 @@
 			var panels_content = "";
 				var counter = 1;
 
-				ref.child("1").once("value", function(snapshot) {
-					console.log(snapshot.numChildren());
+				ref.child("1-2").once("value", function(snapshot) {
+					//console.log(snapshot.numChildren());
 					snapshot.forEach(function(childSnapshot){
 				  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
 				  		if(counter >= snapshot.numChildren()){
@@ -70,7 +78,8 @@
 						}
 						$(".set-panel").click(function(){
 							set = parseInt($(this).attr('id').replace(/set-/,""));
-							reload(1,set);
+
+							reload("1-2",set);
 						});
 						counter++;
 					});
@@ -127,20 +136,21 @@
 		}
 
 		$(document).ready(function(){
-			reload(1,1);
+			reload("1-2",1);
 			initSetSetup();
 			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 			var lesson = 1;
 			var set = 1;
 			$(".link-lesson").click(function(){
 				lesson = parseInt($(this).attr('id').replace(/link-lesson-/,""));
-				var numInWords = ["One",'Two','Three','Four','Five','Six','Seven','Eight','Nine']
+				console.log(lesson);
+				var numInWords = ["1-2","3","4-5","6","Binary","7","8","9","10","11","12","13-14","15","16"];
 				$("#lessonNum").html(numInWords[lesson-1]);
-				reload(lesson,1);
+				reload(numInWords[lesson-1],1);
 				var panels_content = "";
 				var counter = 1;
 
-				ref.child(""+lesson).once("value", function(snapshot) {
+				ref.child(""+numInWords[lesson-1]).once("value", function(snapshot) {
 					console.log(snapshot.numChildren());
 					snapshot.forEach(function(childSnapshot){
 				  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
@@ -150,7 +160,7 @@
 						$(".set-panel").click(function(){
 							set = parseInt($(this).attr('id').replace(/set-/,""));
 							console.log("hello");
-							reload(lesson,set);
+							reload(numInWords[lesson-1],set);
 						});
 
 						counter++;

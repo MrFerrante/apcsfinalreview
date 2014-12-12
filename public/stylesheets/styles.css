@@ -111,3 +111,12 @@ nav{
     from {background: #1976d2;}
     to {background: #82b1ff;}
 }
+
+.dropdown-content li{
+	padding: 0.6rem 0.6rem;
+	text-align: center;
+}
+
+.link-lesson a{
+	text-decoration: none;
+}
