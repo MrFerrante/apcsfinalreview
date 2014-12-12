@@ -15,7 +15,7 @@
 			<div class="col s12">
 				<a href="#!" class="brand-logo" style="margin-left:30px;text-decoration:none">APCS Final Review - Problem Submission Form</a>
 				<ul class="right side-nav" style="margin-left:30px">
-					<li><a href="index.html">Return</a></li>
+					<li><a href="/">Return</a></li>
 				</ul>
 			</div>
 		</div>
@@ -128,7 +128,7 @@
 
 		function parse(origString){
 			var newLinesRemoved = origString.trim().replace(/\n/g, "&#10;");
-			var tabsReplaced = newLinesRemoved.replace(/\s{4}/g,"&#9;");
+			var tabsReplaced = newLinesRemoved.replace(/\s{4}/g,"&#9;").replace(/\t/g,"&#9;");
 			return tabsReplaced;
 			//"so my name is areeb&#10;    system.out.println();&#10;        hi();"
 			//"so my name is areeb&#10;&#9;system.out.println();&#10;&#9;&#9;hi();"
