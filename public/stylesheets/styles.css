@@ -96,7 +96,7 @@ nav{
 	text-decoration: none;
 	background-color: #82b1ff;
 	color: white;
-
+	height: 64px;
 	-webkit-animation: myfirst .2s; /* Chrome, Safari, Opera */
     animation: myfirst .2s;
 }
@@ -119,4 +119,9 @@ nav{
 
 .link-lesson a{
 	text-decoration: none;
+}
+
+#page-title{
+	font-weight: 300;
+	font-family: "Roboto"
 }

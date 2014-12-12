@@ -78,3 +78,8 @@ body{
 	padding:0.5rem;
 	font-style: 1rem;
 }
+
+#page-title{
+	font-weight: 300;
+	font-family: "Roboto"
+}
