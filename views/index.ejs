@@ -43,8 +43,7 @@
 	</nav>
 	<div class="row">
 		<div class="col l2 sidebar" id="scrollbar">
-			<h3 style="margin-top:100px">Problems</h3>
-			<div class="panels">
+			<div style="margin-top:80px" class="panels">
 
 			</div>
 		</div>
@@ -153,6 +152,8 @@
 
 				ref.child(""+numInWords[lesson-1]).once("value", function(snapshot) {
 					console.log(snapshot.numChildren());
+					if(snapshot.numChildren()==0)
+						toast('No problems for this lesson yet', 3000);
 					snapshot.forEach(function(childSnapshot){
 				  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
 				  		if(counter >= snapshot.numChildren()){
@@ -170,8 +171,7 @@
 
 			});
 
-			$('.dropdown-button').dropdown({
-			});
+			$('.dropdown-button').dropdown();
 
 
 		});
