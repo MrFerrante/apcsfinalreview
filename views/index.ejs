@@ -128,7 +128,6 @@
 					    	}
 					    	else
 								$('.edit_wrap').toggle("slide",  {direction: "left"}, 300);
-							//$('.edit_wrap').slideToggle("fast");
 					    });
 
 						return true;
@@ -176,7 +175,6 @@
 					counter++;
 
 					if(loopCount >= snapshot.numChildren()){
-						//console.log(newContent);
 						var footerContent = '<br><div class="row"><a class="col s3 waves-effect waves-light btn edit-problem-button red darken-2" style=text-decoration:none>Save Changes</a><button class="btn waves-effect waves-light form-button pull-right problem-add" type="submit" name="action"; style="text-decoration:none">Add Problem<i class="mdi-content-add right"></i></button></div>';
 						$(".problem-section").html(newContent);
 						$(".footer").html(footerContent);
@@ -188,13 +186,9 @@
 
 					    $(".edit-problem-button").click(function() {
 					    	toast("Saving...");
-					    	//lesson, set, 
-					    	//save(less)
-							//$('.edit_wrap').slideToggle("fast");
 
 							ref.child(lesson).once("value",function(snapshot){
-								//set = snapshot.numChildren()+1;
-								//var name = $("#first_name").val().trim() + " " +$("#last_name").val().trim();
+
 								var name = basedSnapshot.child("name").val();
 
 								var problems = [];
