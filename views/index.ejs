@@ -26,6 +26,7 @@
 		<li class="link-lesson" id="link-lesson-12"><a href="#">13 to 14</a></li>
 		<li class="link-lesson" id="link-lesson-13"><a href="#">15</a></li>
 		<li class="link-lesson" id="link-lesson-14"><a href="#">16</a></li>
+		<li class="link-lesson" id="link-lesson-15"><a href="#">test</a></li>
 
 
 	</ul>
@@ -50,7 +51,9 @@
 
 		<div class="col s9 content" id="scrollbar">
 			<div class="container content-container" style="width:90%;">
+				<section class="problem-section"></section>
 
+				<div class="footer"></div>
 			</div>
 		</div>
 	</div>
@@ -85,6 +88,7 @@
 				});
 		}
 
+
 		function reload(lesson,set){
 			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 			var newRef = new Firebase("https://apcsfinalreview.firebaseio.com/"+lesson+"/"+set);
@@ -93,36 +97,151 @@
 
 
 
-			newRef.child('problems').once("value", function(snapshot) {
-			  var counter = 1;
-			  var loopCount = 1;
-			  
-			  snapshot.forEach(function(childSnapshot){
-			  	var build = '<div class=problem><div class=title><h5 class="header-text subheader">Problem ' + counter + '</h5></div><br><br><br><pre class=problem-text style="background:none;border:none">'+childSnapshot.child(0).val()+'</pre><br><br><a class="waves-effect waves-light btn answer-show" id="answer-'+counter+'" style=text-decoration:none>Show Answer</a><br><pre id="pre-'+counter+'" style=display:none;font-size:12px>'+childSnapshot.child(1).val()+'</pre></div>';
+				newRef.child('problems').once("value", function(snapshot) {
+				  var counter = 1;
+				  var loopCount = 1;
+				  
+				  snapshot.forEach(function(childSnapshot){
+				  	var build = '<div class=problem><div class=title><h5 class="header-text subheader">Problem ' + counter + '</h5></div><br><br><br><pre class=problem-text style="background:none;border:none">'+childSnapshot.child(0).val()+'</pre><br><br><a class="waves-effect waves-light btn answer-show" id="answer-'+counter+'" style=text-decoration:none>Show Answer</a><br><pre id="pre-'+counter+'" style=display:none;font-size:12px>'+childSnapshot.child(1).val()+'</pre></div>';
 
-			  	if(childSnapshot.child(0).val().length > 0 && childSnapshot.child(1).val().length >0)
-			  		newContent = newContent + build;
+				  	if(childSnapshot.child(0).val().length > 0 && childSnapshot.child(1).val().length >0)
+				  		newContent = newContent + build;
 
-				counter++;
+					counter++;
 
-				if(loopCount >= snapshot.numChildren()){
-					$(".content-container").html(newContent);
+					if(loopCount >= snapshot.numChildren()){
+						newContent+='<br><div class="row"><a class="col s3 waves-effect waves-light btn edit-problem-button red darken-2" style=text-decoration:none>Edit Problems</a></br><div class="input-field edit_wrap col s4" style="top:-30px; display:none"><input id="edit_code" type="text" placeholder = "Enter code, then press the button again" required></div></div>';
+						$(".problem-section").html(newContent);
 
-					$(".answer-show").click(function() {
-						var counter = $(this).attr('id').replace(/answer-/,"");
-				        $('#pre-'+counter).slideToggle("fast");
-				        console.log('#pre-'+counter);
-				    });
+						$(".answer-show").click(function() {
+							var counter = $(this).attr('id').replace(/answer-/,"");
+					        $('#pre-'+counter).slideToggle("fast");
+					        console.log('#pre-'+counter);
+					    });
 
-					return true;
-				}
+					    $(".edit-problem-button").click(function() {
+					    	if($("#edit_code").val().length > 0){
+					    		if($("#edit_code").val() == basedSnapshot.child("code").val())
+					    			reloadForEdit(lesson,set);
+					    		else
+					    			toast("Incorrect code!",3000);
+					    	}
+					    	else
+								$('.edit_wrap').toggle("slide",  {direction: "left"}, 300);
+							//$('.edit_wrap').slideToggle("fast");
+					    });
 
-				loopCount++;
-			  })
-			}, function (errorObject) {
-			  console.log("The read failed: " + errorObject.code);
+						return true;
+					}
+
+					loopCount++;
+				  })
+				}, function (errorObject) {
+				  console.log("The read failed: " + errorObject.code);
+				});
+
 			});
+		}
 
+		function parse(origString){
+			var newLinesRemoved = origString.replace(/\n/g, "&#10;");
+			var tabsReplaced = newLinesRemoved.replace(/\s{4}/g,"&#9;").replace(/\t/g,"&#9;");
+
+			return tabsReplaced;
+		}
+
+		function imageParse(origString){
+			var openImageReplaced= origString.replace(/<img>/g,"<img width=\"400px\" src=\"")
+			var closeImageReplaced = openImageReplaced.replace(/<\/img>/g,"\" />");
+
+			return closeImageReplaced;
+		}
+
+		function reloadForEdit(lesson,set){
+			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
+			var newRef = new Firebase("https://apcsfinalreview.firebaseio.com/"+lesson+"/"+set);
+			newRef.once("value",function(basedSnapshot){
+				newContent = '<div style="margin-top:50px;padding-bottom:30px;"><h2 class="header-text" style="padding-bottom:30px;padding-top:30px;display:inline">Set ' + set+ ' </h2><h5 style="display:inline;color:#bdbdbd">by '+basedSnapshot.child("name").val() + '</h5></div>';
+
+				newRef.child('problems').once("value", function(snapshot) {
+				  var counter = 1;
+				  var loopCount = 1;
+				  
+				  snapshot.forEach(function(childSnapshot){
+				  	var build = '<div class=problem><div class=title><h5 class="header-text subheader">Problem ' + counter + '</h5></div><br><br><br><textarea id="problem-' + counter +'">'+childSnapshot.child(0).val()+'</textarea><br><br><a class="waves-effect waves-light btn answer-show" id="answer-'+counter+'" style=text-decoration:none>Edit Answer</a><br><textarea id="pre-'+counter+'" style=display:none;font-size:12px>'+childSnapshot.child(1).val()+'</textarea></div>';
+
+				  	if(childSnapshot.child(0).val().length > 0 && childSnapshot.child(1).val().length >0)
+				  		newContent = newContent + build;
+
+					counter++;
+
+					if(loopCount >= snapshot.numChildren()){
+						//console.log(newContent);
+						var footerContent = '<br><div class="row"><a class="col s3 waves-effect waves-light btn edit-problem-button red darken-2" style=text-decoration:none>Save Changes</a><button class="btn waves-effect waves-light form-button pull-right problem-add" type="submit" name="action"; style="text-decoration:none">Add Problem<i class="mdi-content-add right"></i></button></div>';
+						$(".problem-section").html(newContent);
+						$(".footer").html(footerContent);
+						$(".answer-show").click(function() {
+							var counter = $(this).attr('id').replace(/answer-/,"");
+					        $('#pre-'+counter).slideToggle("fast");
+					        console.log('#pre-'+counter);
+					    });
+
+					    $(".edit-problem-button").click(function() {
+					    	toast("Saving...");
+					    	//lesson, set, 
+					    	//save(less)
+							//$('.edit_wrap').slideToggle("fast");
+
+							ref.child(lesson).once("value",function(snapshot){
+								//set = snapshot.numChildren()+1;
+								//var name = $("#first_name").val().trim() + " " +$("#last_name").val().trim();
+								var name = basedSnapshot.child("name").val();
+
+								var problems = [];
+								for(var i=0;i<counter-1;i++){
+									console.log(counter);
+									var tuple = [imageParse($("#problem-"+(i+1)).val()),parse($("#pre-"+(i+1)).val())];
+									console.log(tuple);
+									problems.push(tuple);
+								}
+								var code = basedSnapshot.child("code").val();
+								ref.child(lesson).child(set).set({
+								    name: name,
+								    problems:problems,
+								    code:code
+								},function(){
+									var url = "/";
+									$(location).attr('href',url);
+								});
+							});
+
+
+
+
+
+
+
+
+
+
+
+					    });
+
+					    $(".problem-add").click(function(){
+
+					    	//'<div class=problem><div class=title><h5 class="header-text subheader">Problem ' + counter + '</h5></div><br><br><br><textarea id="problem-' + counter +'">'+childSnapshot.child(0).val()+'</textarea><br><br><a class="waves-effect waves-light btn answer-show" id="answer-'+counter+'" style=text-decoration:none>Edit Answer</a><br><textarea id="pre-'+counter+'" style=display:none;font-size:12px>'+childSnapshot.child(1).val()+'</textarea></div>';
+
+					    	$('.problem-section').append('<div class=problem-submission><div class=row><h5>Problem '+(counter)+'</h5><br><div class="input-field col s12"><textarea id=problem-'+(counter)+'></textarea><label>Write your problem here <a class="problem-modal-trigger modal-trigger" href="#problem-modal">(?)</a>:</label></div></div><div class=row><div class="input-field col s12"><textarea id=pre-'+(counter)+'></textarea><label>Enter your solution here (Enter tabs as 4 spaces) <a class="solution-modal-trigger modal-trigger" href="#solution-modal">(?)</a>:</label></div></div></div>');
+					    	counter++;
+					    });
+
+					}
+
+					loopCount++;
+				  })
+				}, function (errorObject) {
+				  console.log("The read failed: " + errorObject.code);
+				});
 
 			});
 		}
@@ -136,7 +255,7 @@
 			$(".link-lesson").click(function(){
 				lesson = parseInt($(this).attr('id').replace(/link-lesson-/,""));
 				console.log(lesson);
-				var numInWords = ["1-2","3","4-5","6","Binary","7","8","9","10","11","12","13-14","15","16"];
+				var numInWords = ["1-2","3","4-5","6","Binary","7","8","9","10","11","12","13-14","15","16","test"];
 				$("#lessonNum").html(numInWords[lesson-1]);
 				reload(numInWords[lesson-1],1);
 				var panels_content = "";

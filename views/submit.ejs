@@ -57,6 +57,7 @@
 							<option value="13-14"><a href="#">13 to 14</a></option>
 							<option value="15"><a href="#">15</a></option>
 							<option value='16'><a href="#">16</a></option>
+							<option value='test'><a href="#">test</a></option>
 						</select>
 					</div>
 				</div>
@@ -160,7 +161,7 @@
 					var problems = [];
 					for(var i=0;i<counter;i++){
 						//[problem,solution]
-						var tuple = [imageParse($("#problem-input"+(i+1)).val().trim()),parse($("#solution-input"+(i+1)).val().trim())];
+						var tuple = [imageParse($("#problem-input"+(i+1)).val()),parse($("#solution-input"+(i+1)).val())];
 						problems.push(tuple);
 					}
 
@@ -187,14 +188,14 @@
 		});
 
 		function parse(origString){
-			var newLinesRemoved = origString.trim().replace(/\n/g, "&#10;");
+			var newLinesRemoved = origString.replace(/\n/g, "&#10;");
 			var tabsReplaced = newLinesRemoved.replace(/\s{4}/g,"&#9;").replace(/\t/g,"&#9;");
 
 			return tabsReplaced;
 		}
 
 		function imageParse(origString){
-			var openImageReplaced= origString.trim().replace(/<img>/g,"<img width=\"400px\" src=\"")
+			var openImageReplaced= origString.replace(/<img>/g,"<img width=\"400px\" src=\"")
 			var closeImageReplaced = openImageReplaced.replace(/<\/img>/g,"\" />");
 
 			return closeImageReplaced;
