@@ -127,13 +127,12 @@
 	<script type="text/javascript" src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.0.6/firebase.js"></script>
 	<script type="text/javascript">
+		var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 		$(document).ready(function(){
 			$('.problem-modal-trigger,.solution-modal-trigger').leanModal();
 			$('.submit-modal-trigger').leanModal();
 
 			var counter = 1;
-
-			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 
 			$(".problem-add").click(function(){
 				
@@ -149,7 +148,6 @@
 					code += chars[Math.round(Math.random() * (chars.length - 1))];
 
 				var lesson = $("#lesson_select").val().trim();
-				var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 				var set;
 
 				$("#code").html(code);

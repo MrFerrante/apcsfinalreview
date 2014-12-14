@@ -65,9 +65,9 @@
 
 	<script type="text/javascript">
 		var newContent;
-
+		var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 		function initSetSetup(){
-			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
+			
 			var panels_content = "";
 				var counter = 1;
 
@@ -90,8 +90,9 @@
 
 
 		function reload(lesson,set){
-			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
-			var newRef = new Firebase("https://apcsfinalreview.firebaseio.com/"+lesson+"/"+set);
+
+			//var newRef = new Firebase("https://apcsfinalreview.firebaseio.com/"+lesson+"/"+set);
+			var newRef = ref.child(lesson).child(set);
 			newRef.once("value",function(basedSnapshot){
 				newContent = '<div style="margin-top:50px;padding-bottom:30px;"><h2 class="header-text" style="padding-bottom:30px;padding-top:30px;display:inline">Set ' + set+ ' </h2><h5 style="display:inline;color:#bdbdbd">by '+basedSnapshot.child("name").val() + '</h5></div>';
 
@@ -191,8 +192,7 @@
 		}
 
 		function reloadForEdit(lesson,set){
-			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
-			var newRef = new Firebase("https://apcsfinalreview.firebaseio.com/"+lesson+"/"+set);
+			var newRef = ref.child(lesson).child(set);
 			newRef.once("value",function(basedSnapshot){
 				newContent = '<div style="margin-top:50px;padding-bottom:30px;"><h2 class="header-text" style="padding-bottom:30px;padding-top:30px;display:inline">Set ' + set+ ' </h2><h5 style="display:inline;color:#bdbdbd">by '+basedSnapshot.child("name").val() + '</h5></div>';
 
@@ -277,7 +277,6 @@
 		$(document).ready(function(){
 			reload("1-2",1);
 			initSetSetup();
-			var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 			var lesson = 1;
 			var set = 1;
 			$(".link-lesson").click(function(){
