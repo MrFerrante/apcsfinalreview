@@ -156,7 +156,7 @@
 
 			for(var i=1;i<tabsReplaced.length;i++){
 			    if(tabsReplaced.charAt(i)=='>' && tabsReplaced.charAt(i-1)!=" "){
-			        if(tabsReplaced.substring(i-3,i)!="img"){
+			        if(tabsReplaced.charAt(i-1) !="/"){
 			            tabsReplaced= tabsReplaced.substr(0, i) + "&gt;" +  tabsReplaced.substr(i + 1);
 			        }
 			    }
@@ -180,13 +180,13 @@
 
 			for(var i=1;i<closeImageReplaced.length;i++){
 			    if(closeImageReplaced.charAt(i)=='>' && closeImageReplaced.charAt(i-1)!=" "){
-			        if(closeImageReplaced.substring(i-3,i)!="img"){
+			        if(closeImageReplaced.charAt(i-1) !="/"){
 			            closeImageReplaced= closeImageReplaced.substr(0, i) + "&gt;" +  closeImageReplaced.substr(i + 1);
 			        }
 			    }
 			}
 
-
+			//alert(closeImageReplaced);
 			return closeImageReplaced;
 		}
 
