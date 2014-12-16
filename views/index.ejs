@@ -26,7 +26,6 @@
 		<li class="link-lesson" id="link-lesson-12"><a href="#">13 to 14</a></li>
 		<li class="link-lesson" id="link-lesson-13"><a href="#">15</a></li>
 		<li class="link-lesson" id="link-lesson-14"><a href="#">16</a></li>
-		<li class="link-lesson" id="link-lesson-15"><a href="#">test</a></li>
 
 
 	</ul>
@@ -77,22 +76,22 @@
 		function initSetSetup(){
 			
 			var panels_content = "";
-				var counter = 1;
+			var counter = 1;
 
-				ref.child("1-2").once("value", function(snapshot) {
-					snapshot.forEach(function(childSnapshot){
-				  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
-				  		if(counter >= snapshot.numChildren()){
-							$(".panels").html(panels_content);
-						}
-						$(".set-panel").click(function(){
-							set = parseInt($(this).attr('id').replace(/set-/,""));
+			ref.child("1-2").once("value", function(snapshot) {
+				snapshot.forEach(function(childSnapshot){
+			  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
+			  		if(counter >= snapshot.numChildren()){
+						$(".panels").html(panels_content);
+					}
+					$(".set-panel").click(function(){
+						set = parseInt($(this).attr('id').replace(/set-/,""));
 
-							reload("1-2",set);
-						});
-						counter++;
+						reload("1-2",set);
 					});
+					counter++;
 				});
+			});
 		}
 
 
@@ -267,38 +266,49 @@
 		}
 
 		$(document).ready(function(){
-			reload("1-2",1);
-			initSetSetup();
-			var lesson = 1;
-			var set = 1;
-			$(".link-lesson").click(function(){
-				lesson = parseInt($(this).attr('id').replace(/link-lesson-/,""));
-				console.log(lesson);
-				var numInWords = ["1-2","3","4-5","6","Binary","7","8","9","10","11","12","13-14","15","16","test"];
-				$("#lessonNum").html(numInWords[lesson-1]);
-				reload(numInWords[lesson-1],1);
-				var panels_content = "";
-				var counter = 1;
+			var status;
+			//console.log('test');
+			ref.child("status").once("value",function(statSnap){	
+				status = statSnap.val();
+				console.log(status)
+				if(status=="disabled"){
+					$("#tooMany").html("<div class='container'>The site has been temporarily disabled by Mr. Ferrante</div>");
+					console.log(status);
+				} else {
+					reload("1-2",1);
+					initSetSetup();
+					var lesson = 1;
+					var set = 1;
+					$(".link-lesson").click(function(){
+						lesson = parseInt($(this).attr('id').replace(/link-lesson-/,""));
+						console.log(lesson);
+						var numInWords = ["1-2","3","4-5","6","Binary","7","8","9","10","11","12","13-14","15","16"];
+						$("#lessonNum").html(numInWords[lesson-1]);
+						reload(numInWords[lesson-1],1);
+						var panels_content = "";
+						var counter = 1;
 
-				ref.child(""+numInWords[lesson-1]).once("value", function(snapshot) {
-					console.log(snapshot.numChildren());
-					if(snapshot.numChildren()==0)
-						toast('No problems for this lesson yet', 3000);
-					snapshot.forEach(function(childSnapshot){
-				  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
-				  		if(counter >= snapshot.numChildren()){
-							$(".panels").html(panels_content);
-						}
-						$(".set-panel").click(function(){
-							set = parseInt($(this).attr('id').replace(/set-/,""));
-							console.log("hello");
-							reload(numInWords[lesson-1],set);
+						ref.child(""+numInWords[lesson-1]).once("value", function(snapshot) {
+							console.log(snapshot.numChildren());
+							if(snapshot.numChildren()==0)
+								toast('No problems for this lesson yet', 3000);
+							snapshot.forEach(function(childSnapshot){
+						  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
+						  		if(counter >= snapshot.numChildren()){
+									$(".panels").html(panels_content);
+								}
+								$(".set-panel").click(function(){
+									set = parseInt($(this).attr('id').replace(/set-/,""));
+									console.log("hello");
+									reload(numInWords[lesson-1],set);
+								});
+
+								counter++;
+							});
 						});
 
-						counter++;
 					});
-				});
-
+				}
 			});
 
 			$('.dropdown-button').dropdown();

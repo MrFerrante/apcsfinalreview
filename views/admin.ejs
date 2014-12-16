@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Admin Page</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen"/>
+	<link rel="stylesheet" href="stylesheets/admin_styles.css">
+</head>
+<body id="scrollbar">
+
+	<nav class="blue darken-2">
+		<div class="nav-wrapper">
+			<div class="col s12">
+				<a href="#" id="page-title" class="brand-logo" style="margin-left:30px;text-decoration:none">APCS Final Review - Admin Panel</a>
+				<ul class="right side-nav" style="margin-left:30px">
+					<li style="margin-right:40px;"><a href="/">Return</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container" style="overflow:hidden">
+		<div class="container" style="overflow:hidden; text-align:center">
+			<b>Directions: </b>Choose an action below and <b>Confirm</b>.
+
+			<div class="row form">
+				<form class="col s6 offset-s3">
+					<label>Actions</label>
+					  <select id="action_select">
+					    <option value="default" disabled selected>Choose your option</option>
+					    <option value="disable">Disable Site</option>
+					    <option value="enable">Enable Site</option>
+					    <option value="clear">Clear Database</option>
+					  </select>
+
+				</form>
+			</div>
+			<div class="row">
+				<div class="col s6 offset-s3">
+					<a class=" waves-effect waves-light btn confirm-code-trigger red accent-2"  style="text-decoration:none;color:white">confirm</a>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col s6 offset-s3">
+					<div class="input-field edit_wrap" style="top:-30px; display:none;text-align:center"><input id="edit_code" type="text" style="text-align:center" placeholder = "Enter password, then press the button again" required>
+				</div>
+			</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.0.6/firebase.js"></script>
+	<script type="text/javascript">
+		var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
+
+		$(document).ready(function(){
+	 		$(".confirm-code-trigger").click(function() {
+	 			$(".confirm-code-trigger").toggleClass("red")
+		    	if($("#edit_code").val().length > 0){
+		    		if($("#edit_code").val() =='<%=password%>'){
+		    			//console.log($("#action_select").val());
+
+		    			if($("#action_select").val() == null)
+		    				toast("No Action Selected",3000);
+		    			else if($("#action_select").val() == "disable")
+		    				ref.child("status").set("disabled", function(){
+		    					toast("Disabled!",2000);
+		    					setTimeout(function(){
+		    						window.location.href = "/";
+		    					},2000);
+		    				});
+		    			else if($("#action_select").val() == "enable")
+		    				ref.child("status").set("enabled", function(){
+		    					toast("Enabled!",2000);
+		    					setTimeout(function(){
+		    						window.location.href = "/";
+		    					},2000);
+		    				});
+		    			else if($("#action_select").val() == "clear")
+		    				ref.remove(function(){
+		    					toast("Cleared",2000);
+		    					setTimeout(function(){
+		    						window.location.href = "/";
+		    					},2000);
+		    				});
+		    		}
+
+		    		else
+		    			toast("Incorrect Password!",3000);
+		    	} else
+					$('.edit_wrap').toggle("slide",  {direction: "up"}, 300);
+		    });
+		});
+
+</script> 
+</body>
+</html>

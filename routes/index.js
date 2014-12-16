@@ -10,4 +10,8 @@ router.get('/submit', function(req, res) {
   res.render('submit', { title: 'Express' });
 });
 
+router.get('/administr', function(req, res) {
+  res.render('admin', { password: 'rainySparkyDays' });
+});
+
 module.exports = router;
