@@ -74,10 +74,11 @@
 		var newContent;
 		var ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 		function initSetSetup(){
-			
+			if(Math.random()<0.7)
+				ref = new Firebase("https://apcs2.firebaseio.com/")
 			var panels_content = "";
 			var counter = 1;
-
+			console.log(ref.toString());
 			ref.child("1-2").once("value", function(snapshot) {
 				snapshot.forEach(function(childSnapshot){
 			  		panels_content+= '<div class="card-panel grey waves-effect waves-light text-center darken-3 set-panel" id="set-'+counter+'" style="margin-left:5px"><span class="white-text" style="font-size:24px;" id="set-title">Set '+counter+'</span></div>';
