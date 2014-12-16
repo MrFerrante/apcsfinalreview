@@ -74,10 +74,6 @@
 		var newContent;
 		var ref;
 		function initSetSetup(){
-			if(Math.random()<0.8)
-				ref = new Firebase("https://apcs2.firebaseio.com/")
-			else
-				ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
 			var panels_content = "";
 			var counter = 1;
 			console.log(ref.toString());
@@ -271,6 +267,11 @@
 		$(document).ready(function(){
 			var status;
 			//console.log('test');
+			if(Math.random()<0.8)
+				ref = new Firebase("https://apcs2.firebaseio.com/")
+			else
+				ref = new Firebase("https://apcsfinalreview.firebaseio.com/");
+			
 			ref.child("status").once("value",function(statSnap){	
 				status = statSnap.val();
 				console.log(status)
