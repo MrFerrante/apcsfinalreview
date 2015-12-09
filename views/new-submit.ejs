@@ -28,13 +28,16 @@
                             Fill out the following information and click <b>Submit</b> to add your problems. If you want to submit multiple problems for the same set, click <b>Add Problem</b>.
 
                             <h6 class="mdl-color-text--blue-grey-700">Adding Problems</h6>
-                            Simply type in your problems into the textboxes below-keep in mind that how you format them here will be exactly how they'll show up on the viewing page. To add an image, just type in the direct link to the image surrounded by "img" tags as follows:
+                            Simply type in your problems into the text boxes below-keep in mind that how you format them here will be exactly how they'll show up on the viewing page. To add an image, just type in the direct link to the image surrounded by "img" tags as follows:
                             <pre style="display:inline-block">&lt;img&gt;http://i.imgur.com/uEVSYHY.png&lt;/img&gt;</pre>
                             <br>
                             While adding code, try to stick with using either 4 spaces in a row or pasting in tabs (you'll see that you can't press the tab key while filling out this form), and the indentation should be preserved.
 
                             <h6 class="mdl-color-text--blue-grey-700">Adding Solutions</h6>
                             The same rules for adding problems apply, but you won't be able to paste in images for this section. Again, if you're pasting code, stick to either 4 spaces or pasting tabs, as these are the only ways that are being covered for indentation. After submitting, you'll be given a 4-character alphanumeric password that you'll need to later be able to edit submissions.
+                            <br><br>
+                            If you've added a problem box by mistake, just leave both the question and solution inputs blank and it'll be ignored.
+
                         </div>
                     </div>
                     <div class="mdl-layout-spacer"></div>
@@ -177,7 +180,6 @@
         lessonsListQuery.get("iyb8zsKB5i", {
             success: function(lessonsList) {
                 lessonsList = lessonsList.get("lessons")
-                // var lessonNames = getLessonNames(lessonsList);
                 var btns = '<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-$(lessonNum)"> <input type="radio" id="option-$(lessonNum)" class="mdl-radio__button" name="options" value="$(lessonId)" $(checked)> <span class="mdl-radio__label mdl-card__supporting-text lesson-title">$(lessonName)</span> </label>';
 
                 for(var i = 0; i < lessonsList.length; i++){
@@ -195,7 +197,6 @@
                     $("#lesson-choice-buttons").append(processed);
                 }
 
-                // $("#lesson-choice-buttons").html(btns);
             },
             error: function(object, error) {
                 console.log(error)

@@ -59,8 +59,6 @@
 
         function answerButtonListener(){
             $(".show-answer-btn").click(function(e){
-                console.log(e.target.parentNode.id);
-
                 var problemNum = e.target.parentNode.id.replace("show-answer-", "");
 
                 $(".problem-" + problemNum + "-solution").slideToggle();
@@ -87,7 +85,6 @@
         function setLinkListeners(sets){
             $(".set-link").click(function(e){
                 var clickedSet = parseInt(e.target.id.replace("set-",""));
-                console.log(clickedSet)
                 $("#set-num").html(clickedSet+1);
                 $("#problems").html("");
                 loadProblems(sets, clickedSet);
@@ -136,7 +133,6 @@
             lessonQuery.get(lessonId, {
                 success: function(lesson) {
                     var sets = lesson.get("sets");
-                    console.log(sets);
                     if(sets.length == 0){
                         $("#set-title").html("No problems here yet!");
                         $(".edit-problems-btn").hide();
@@ -170,7 +166,6 @@
                 var captured = /i=([^&]+)/.exec(window.location.href);
                 var result = captured ? captured[1] : 0;
                 result = parseInt(result);
-                console.log(result)
 
                 var preText = ' <i class="fa fa-chevron-down"></i>'
                 $('.section-title').html('Lesson ' + lessonNames[result] + preText);
@@ -182,7 +177,6 @@
 
                 $(".lesson-link").click(function(e){
                     var id = e.target.id.replace("link-", "");
-                    // console.log(window.location.href + '/?i='+id);
                     $(location).attr('href','/new?i='+id);
                 });
 
