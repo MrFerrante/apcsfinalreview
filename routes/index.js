@@ -6,6 +6,14 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/new', function(req, res) {
+  res.render('new', { title: 'Express' });
+});
+
+router.get('/new-submit', function(req, res) {
+  res.render('new-submit', { title: 'Express' });
+});
+
 router.get('/submit', function(req, res) {
   res.render('submit', { title: 'Express' });
 });
