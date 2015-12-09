@@ -293,7 +293,7 @@
                     lesson.save(null, {
                         success: function(newSet) {
                             alert("Your work has been submitted. If you want to edit it later on, you'll need the code below to do so, so store it somewhere safe.\n\nCode: " + code);
-                            $(location).attr('href','/new');
+                            $(location).attr('href','/');
                         },
                         error: function(newSet, error) {
                             alert('Failed to save, with error code: ' + error.message);
