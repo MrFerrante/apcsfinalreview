@@ -231,7 +231,7 @@
             } else {
                 if(hash(codeResp) == getCookie("code")){
                     setCookie("codeResp", codeResp);
-                    $(location).attr('href','/test-submit?edit=true');
+                    $(location).attr('href','/?edit=true');
                 } else {
                     alert("Incorrect code");
                 }
