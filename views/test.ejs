@@ -193,6 +193,7 @@
 
                 var access = lessonsList.get("access");
                 if(!access){
+                    $(".edit-problems-btn").remove();
                     $("#set-title").html("Access has currently been disabled by admin");
                     return;
                 }

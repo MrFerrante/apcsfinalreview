@@ -176,6 +176,12 @@
         });
 
         $(".access-button").click(function(e){
+
+            if(!validatePassword()){
+                alert("Incorrect password");
+                return;
+            }
+            
             var buttonType = e.target.parentNode.id.replace("-access-btn", "");
             buttonType = (buttonType === 'enable');
 
@@ -320,6 +326,12 @@
 
 
         $("#clear-db-btn").click(function(){
+
+            if(!validatePassword()){
+                alert("Incorrect password");
+                return;
+            }
+
             var confirmed = confirm("Are you sure you want to empty the database? The lessons will be preserved, but all student questions will be lost. Page will refresh on completion.")
 
             if(!confirmed){
