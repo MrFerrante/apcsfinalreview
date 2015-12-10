@@ -15,7 +15,7 @@
         <header class="mdl-layout__header mdl-color--teal-400">
             <div class="mdl-layout__header-row">
                 <div class="mdl-layout-spacer"></div>
-                <a class="mdl-navigation__link" href="/submit">Submit Problem</a>
+                <a class="mdl-navigation__link problem-submit-link" href="/submit">Submit Problem</a>
                 <a class="mdl-navigation__link section-title" id="hdrbtn">Lesson <i class="fa fa-chevron-down"></i></a>
                 <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right section-menu" for="hdrbtn">
                 </ul>
@@ -194,6 +194,7 @@
                 var access = lessonsList.get("access");
                 if(!access){
                     $(".edit-problems-btn").remove();
+                    $(".problem-submit-link").remove();
                     $("#set-title").html("Access has currently been disabled by admin");
                     return;
                 }
