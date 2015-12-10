@@ -217,7 +217,7 @@
                 if(editing && checkCookie("setIndex") && checkCookie("lessonId") && getCookie("code") == hash(getCookie("codeResp"))){
                     //edit
                     $(".basic-info-card").remove();
-                    $(".basic-info-card").remove();
+                    // $(".basic-info-card").remove();
                     $(".submit-problems-btn").addClass("submit-edit-btn");
                     $(".submit-problems-btn").removeClass("submit-problems-btn");
 
@@ -226,9 +226,10 @@
                             var sets = lesson.get("sets");
                             var setIndex = parseInt(getCookie("setIndex"));
                             var currSet = sets[setIndex];
-
+                            console.log(lesson)
                             var problems = currSet.problems;
                             problemNum = problems.length;
+                            console.log(problems)
                             for(var i = 1; i < problems.length; i++){
                                 newProblemField(i);
                             }
