@@ -40,8 +40,6 @@
                     <a href="#" class="edit-problems-btn mdl-button mdl-js-button mdl-js-ripple-effect mdl-color--teal-300 mdl-color-text--white">Edit Problems</a>
                 </div>
 
-
-
             </div>
         </main>
     </div>
@@ -56,6 +54,35 @@
 
     $(document).ready(function(){
         Parse.initialize("gV7nKoiPMnEPz2WAvVNdlLnIE3rdMGCVTywuGxhg", "9pxUUwLlmOdB9C54yxvYH38c7YVtNvWYyMbNoPjS");
+
+        function hash(str){
+        	var hash = 0;
+        	if (str.length == 0) return hash;
+        	for (i = 0; i < str.length; i++) {
+        		char = str.charCodeAt(i);
+        		hash = ((hash<<5)-hash)+char;
+        		hash = hash & hash; // Convert to 32bit integer
+        	}
+        	return hash;
+        }
+
+        function setCookie(cname, cvalue) {
+            var d = new Date();
+            d.setTime(d.getTime() + (24*60*60*1000));
+            var expires = "expires="+d.toUTCString();
+            document.cookie = cname + "=" + cvalue + "; " + expires;
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0; i<ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1);
+                if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+            }
+            return "";
+        }
 
         function answerButtonListener(){
             $(".show-answer-btn").click(function(e){
@@ -92,7 +119,7 @@
         }
 
         function buildProblem(problemText, solutionText, problemNum){
-            var problemPreProcessed = '<div class="problem-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop"> <div class="card-head mdl-card__title mdl-card--expand mdl-color--teal-300"> <h2 class="mdl-card__title-text mdl-color-text--grey-50">Problem $(problemNumPlusOne)</h2> </div> <div class="mdl-card__supporting-text mdl-color-text--grey-600"> <div class="problem-$(problemNum)-text"> $(problemText) <div class="problem-$(problemNum)-solution solution-text"> <pre>$(solutionText)</pre> </div> </div> </div> <div class="mdl-card__actions mdl-card--border"> <div id="problem-$(problemNum)-button-wrapper"> </div> </div> </div>';
+            var problemPreProcessed = '<div class="problem-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop"> <div class="card-head mdl-card__title mdl-card--expand mdl-color--teal-300"> <h2 class="mdl-card__title-text mdl-color-text--grey-50">Problem $(problemNumPlusOne)</h2> </div> <div class="mdl-card__supporting-text mdl-color-text--grey-600"> <div class="problem-text problem-$(problemNum)-text"> $(problemText) <div class="problem-$(problemNum)-solution solution-text"> <pre>$(solutionText)</pre> </div> </div> </div> <div class="mdl-card__actions mdl-card--border"> <div id="problem-$(problemNum)-button-wrapper"> </div> </div> </div>';
             var newProblem = document.createElement('div');
             newProblem.className = 'mdl-grid';
             var processed = problemPreProcessed.split("$(problemNumPlusOne)").join(problemNum+1).split("$(problemNum)").join(problemNum);
@@ -113,7 +140,11 @@
 
         function loadProblems(sets, setNum){
             var set = sets[setNum];
+
             $('.set-author').html(set.name);
+            setCookie("code", hash(set.code));
+            setCookie("setIndex", setNum);
+
             $('.set-num').html(setNum+1);
 
             var problems = set.problems;
@@ -141,6 +172,7 @@
                         for(var i = 0; i < sets.length; i++){
                             $('.nav-sets').append(preText + i + '"> Set ' + (i+1) + '</a>');
                         }
+                        setCookie("lessonId", lessonId);
                         loadProblems(sets, 0);
                         setLinkListeners(sets);
                     }
@@ -190,7 +222,22 @@
             }
         });
 
+        $(".edit-problems-btn").click(function(){
+            var codeResp = prompt("Enter your code: ");
 
+            if(codeResp == null){
+                alert("Invalid code");
+                return;
+            } else {
+                if(hash(codeResp) == getCookie("code")){
+                    setCookie("codeResp", codeResp);
+                    $(location).attr('href','/test-submit?edit=true');
+                } else {
+                    alert("Incorrect code");
+                }
+            }
+
+        });
     });
 
 
