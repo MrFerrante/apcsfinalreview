@@ -6,7 +6,7 @@ router.get('/', function(req, res) {
 });
 
 router.get('/test', function(req, res) {
-  res.render('new', { title: 'Express' });
+  res.render('test', { title: 'Express' });
 });
 
 router.get('/submit', function(req, res) {
@@ -14,7 +14,7 @@ router.get('/submit', function(req, res) {
 });
 
 router.get('/test-submit', function(req, res) {
-  res.render('new', { title: 'Express' });
+  res.render('test-submit', { title: 'Express' });
 });
 
 router.get('/administr', function(req, res) {
