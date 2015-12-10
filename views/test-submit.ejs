@@ -235,8 +235,8 @@
                             }
 
                             for(var i = 0; i < problems.length; i++){
-                                $("#problem-" + i + "-input").val(problems.question);
-                                $("#solution-" + i + "-input").val(problems.solution);
+                                $("#problem-" + i + "-input").val(problems[i].question);
+                                $("#solution-" + i + "-input").val(problems[i].solution);
                             }
 
                             $(".submit-edit-btn").click(function(){
