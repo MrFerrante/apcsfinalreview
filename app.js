@@ -16,7 +16,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 var api = new ParseServer({
-  databaseURI: 'mongodb://localhost:27017/dev', // Connection string for your MongoDB database
+  databaseURI: process.env.DATABASE_URI || 'mongodb://localhost:27017/dev', // Connection string for your MongoDB database
   appId: 'LHo1QH71fzGF6aYKqt9xCYSSLbu6AgWVdBeFsqGV',
   masterKey: '80dEw09Sm9AA2jvECX0W9glmGOXkgrpQX4gL9osZ', // Keep this key secret!
 });
