@@ -87,7 +87,7 @@ $(document).ready(function() {
     }
 
     function loadData() {
-        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
+        lessonsListQuery.get("pSBZVoeB0z").then((lessonsList) => {
 
                 checkAccessStatus(lessonsList.get("access"));
 
@@ -126,7 +126,7 @@ $(document).ready(function() {
         var buttonType = e.target.parentNode.id.replace("-access-btn", "");
         buttonType = (buttonType === 'enable');
 
-        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
+        lessonsListQuery.get("pSBZVoeB0z").then((lessonsList) => {
                 // Update access value
                 lessonsList.set("access", buttonType)
                 lessonsList.save(null).then((obj) => {
@@ -164,7 +164,7 @@ $(document).ready(function() {
 
                 newLesson.save(null).then((newLesson) => {
                         // Next, we need to add its ID to the master list of all lessons
-                        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
+                        lessonsListQuery.get("pSBZVoeB0z").then((lessonsList) => {
 
                             // Build object with lesson ID and name
                             var newLessonObj = {
@@ -217,7 +217,7 @@ $(document).ready(function() {
 
         var selectedIndices = getSelectedIndices(selectedLessons);
 
-        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
+        lessonsListQuery.get("pSBZVoeB0z").then((lessonsList) => {
 
             var lessonsArray = lessonsList.get("lessons");
             // This list will store the names of lessons removed from the master list
