@@ -184,7 +184,7 @@ $(document).ready(function(){
     }
 
     function loadData(){
-        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
+        lessonsListQuery.get("pSBZVoeB0z").then((lessonsList) => {
 
                 // Check if access to the site is disabled
                 var access = lessonsList.get("access");
