@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
     // Connect to DB
-    Parse.initialize("gV7nKoiPMnEPz2WAvVNdlLnIE3rdMGCVTywuGxhg", "9pxUUwLlmOdB9C54yxvYH38c7YVtNvWYyMbNoPjS");
+    Parse.initialize("LHo1QH71fzGF6aYKqt9xCYSSLbu6AgWVdBeFsqGV");
+    Parse.serverURL = 'parse';
 
     var LessonsListClass = Parse.Object.extend("LessonsList");
     var LessonClass = Parse.Object.extend("Lesson");
@@ -147,8 +148,7 @@ $(document).ready(function(){
             var newProblems = getProblemInputs();
 
             // Get latest data
-            lessonQuery.get(lessonId, {
-                success: function(lesson) {
+            lessonQuery.get(lessonId).then((lesson) => {
                     // Save set to lesson object
                     var sets = lesson.get("sets");
                     // Get the data for the set currently being edited
@@ -160,22 +160,19 @@ $(document).ready(function(){
                     sets[setIndex] = currSet;
                     lesson.set("sets", sets);
 
-                    lesson.save(null, {
-                        success: function(lesson){
+                    lesson.save(null).then((lesson) => {
                             // Reset cookies
                             document.cookie = "setIndex=; lessonId=; code=; codeResp=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
                             // On complete, return to home
                             $(location).attr('href','/');
-                        },
-                        error: function(obj, error){
+                        }, (error) => {
                             alert(error.message);
                         }
-                    });
-                },
-                error: function(obj, error){
+                    );
+                }, (error) => {
                     alert(error.message);
                 }
-            });
+            );
         });
     }
 
@@ -262,8 +259,7 @@ $(document).ready(function(){
     }
 
     function loadData(){
-        lessonsListQuery.get("iyb8zsKB5i", {
-            success: function(lessonsList) {
+        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
                 var editing = checkEditing();
 
                 // Check if in editing mode, all required data present, and if codes match
@@ -272,8 +268,7 @@ $(document).ready(function(){
                     editModeUI();
 
                     // Get all data for the requested lesson
-                    lessonQuery.get(getCookie("lessonId"), {
-                        success : function(lesson){
+                    lessonQuery.get(getCookie("lessonId")).then((lesson) => {
                             var sets = lesson.get("sets");
                             // Get the data for the set currently being edited
                             var setIndex = parseInt(getCookie("setIndex"));
@@ -281,21 +276,19 @@ $(document).ready(function(){
 
                             loadSavedProblems(lesson, currSet);
                             setEditsSubmitListener(getCookie("lessonId"), setIndex);
-                        },
-                        error : function(obj, error){
+                        }, (error) => {
                             alert(error.message);
                         }
-                    });
+                    );
 
                 } else {
                     // Not in editing mode, build basic info form with radio buttons for lesson choice
                     addLessonOptions(lessonsList.get("lessons"));
                 }
-            },
-            error: function(obj, error) {
+            }, (error) => {
                 alert(error.message);
             }
-        });
+        );
     }
 
 
@@ -326,24 +319,20 @@ $(document).ready(function(){
             "problems" : problems
         }
 
-        lessonQuery.get(lessonId, {
-            success: function(lesson) {
+        lessonQuery.get(lessonId).then((lesson) => {
                 // Save set to lesson object
                 lesson.add("sets", newSet);
-                lesson.save(null, {
-                    success: function(newSet) {
+                lesson.save(null).then((newSet) => {
                         alert("Your work has been submitted. If you want to edit it later on, you'll need the code below to do so, so store it somewhere safe.\n\nCode: " + code);
                         // Return to home on complete
                         $(location).attr('href','/');
-                    },
-                    error: function(obj, error) {
+                    }, (error) => {
                         alert(error.message);
                     }
-                });
-            },
-            error: function(obj, error) {
+                );
+            }, (error)  =>{
                 alert(error.message);
             }
-        });
+        );
     });
 });

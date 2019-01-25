@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
     // Connect to DB
-    Parse.initialize("gV7nKoiPMnEPz2WAvVNdlLnIE3rdMGCVTywuGxhg", "9pxUUwLlmOdB9C54yxvYH38c7YVtNvWYyMbNoPjS");
+    Parse.initialize("LHo1QH71fzGF6aYKqt9xCYSSLbu6AgWVdBeFsqGV");
+    Parse.serverURL = '/parse';
 
     var LessonsListClass = Parse.Object.extend("LessonsList");
     var LessonClass = Parse.Object.extend("Lesson");
@@ -156,8 +157,7 @@ $(document).ready(function(){
     // Get list of sets for side nav
     function loadSets(lessonId){
 
-        lessonQuery.get(lessonId, {
-            success: function(lesson) {
+        lessonQuery.get(lessonId).then((lesson) => {
                 var sets = lesson.get("sets");
                 if(sets.length == 0){
                     // No sets available for current lesson
@@ -177,15 +177,14 @@ $(document).ready(function(){
                     setLinkListeners(sets);
                 }
             },
-            error: function(obj, error) {
+            (error) => {
                 alert(error.message)
             }
-        });
+        );
     }
 
     function loadData(){
-        lessonsListQuery.get("iyb8zsKB5i", {
-            success: function(lessonsList) {
+        lessonsListQuery.get("cYtPNRWRDg").then((lessonsList) => {
 
                 // Check if access to the site is disabled
                 var access = lessonsList.get("access");
@@ -213,11 +212,10 @@ $(document).ready(function(){
                 // Build the left sidebar for navigation between sets
                 loadSets(lessonIds[index]);
 
-            },
-            error: function(obj, error) {
+            }, (error) => {
                 alert(error.message);
             }
-        });
+        );
 
     }
 
