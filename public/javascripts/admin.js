@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     // CHecks to see if admin has used correct password
     function validatePassword() {
-        return true; //hash($("#pw").val()) == -723347208;
+        return hash($("#pw").val()) == -723347208;
     }
 
     // Leaves the appropriate control button for database access

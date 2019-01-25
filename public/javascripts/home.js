@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     // Connect to DB
     Parse.initialize("LHo1QH71fzGF6aYKqt9xCYSSLbu6AgWVdBeFsqGV");
-    Parse.serverURL = '/parse';
+    Parse.serverURL = 'parse';
 
     var LessonsListClass = Parse.Object.extend("LessonsList");
     var LessonClass = Parse.Object.extend("Lesson");
